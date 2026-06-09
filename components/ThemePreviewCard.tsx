@@ -1,6 +1,5 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { type Theme } from '@/constants/themes';
-import { useTheme } from '@/context/ThemeContext';
 
 type Props = {
   theme: Theme;
@@ -9,7 +8,6 @@ type Props = {
 };
 
 export function ThemePreviewCard({ theme: previewTheme, active, onSelect }: Props) {
-  const { theme } = useTheme();
   const swatches = [
     previewTheme.colors.background,
     previewTheme.colors.surface,
@@ -22,8 +20,8 @@ export function ThemePreviewCard({ theme: previewTheme, active, onSelect }: Prop
     <Pressable
       style={({ pressed }) => [
         styles.card,
-        { backgroundColor: theme.colors.surface, opacity: pressed ? 0.8 : 1 },
-        active && { borderWidth: 2, borderColor: theme.colors.accent },
+        { backgroundColor: previewTheme.colors.surface, opacity: pressed ? 0.8 : 1 },
+        active && { borderWidth: 2, borderColor: previewTheme.colors.accent },
       ]}
       onPress={onSelect}
     >
@@ -33,8 +31,10 @@ export function ThemePreviewCard({ theme: previewTheme, active, onSelect }: Prop
         ))}
       </View>
       <View style={styles.labelRow}>
-        <Text style={[styles.name, { color: theme.colors.text }]}>{previewTheme.name}</Text>
-        <Text style={[styles.mode, { color: theme.colors.accent }]}>
+        <Text style={[styles.name, { color: previewTheme.colors.text, fontFamily: previewTheme.fonts.heading }]}>
+          {previewTheme.name}
+        </Text>
+        <Text style={[styles.mode, { color: previewTheme.colors.accent, fontFamily: previewTheme.fonts.body }]}>
           {previewTheme.dark ? 'Dark' : 'Light'}
         </Text>
       </View>
@@ -65,10 +65,8 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: 16,
-    fontWeight: '600',
   },
   mode: {
     fontSize: 13,
-    fontWeight: '500',
   },
 });

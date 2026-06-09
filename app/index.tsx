@@ -1,19 +1,24 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { useTheme } from '@/context/ThemeContext';
+import { ThemedTitle } from '@/components/ThemedTitle';
+import { ThemedText } from '@/components/ThemedText';
 
 export default function HomeScreen() {
   const { theme } = useTheme();
   const router = useRouter();
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background }]}>
+    <SafeAreaView
+      edges={['bottom']}
+      style={[styles.container, { backgroundColor: theme.colors.background }]}
+    >
       <View style={styles.content}>
-        <Text style={[styles.title, { color: theme.colors.text }]}>Storybook</Text>
-        <Text style={[styles.subtitle, { color: theme.colors.accent }]}>
+        <ThemedTitle style={styles.title}>Storybook</ThemedTitle>
+        <ThemedText style={[styles.subtitle, { color: theme.colors.accent }]}>
           Every choice writes the next chapter
-        </Text>
+        </ThemedText>
         <Pressable
           style={({ pressed }) => [
             styles.startButton,
@@ -21,9 +26,9 @@ export default function HomeScreen() {
           ]}
           onPress={() => router.push('/story')}
         >
-          <Text style={[styles.startLabel, { color: theme.colors.background }]}>
+          <ThemedText style={[styles.startLabel, { color: theme.colors.background }]}>
             Begin Adventure
-          </Text>
+          </ThemedText>
         </Pressable>
       </View>
     </SafeAreaView>
@@ -41,10 +46,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 32,
   },
   title: {
-    fontSize: 48,
-    fontWeight: '800',
-    letterSpacing: 1,
+    fontSize: 52,
     marginBottom: 12,
+    textAlign: 'center',
   },
   subtitle: {
     fontSize: 16,
@@ -59,7 +63,6 @@ const styles = StyleSheet.create({
   },
   startLabel: {
     fontSize: 18,
-    fontWeight: '700',
     letterSpacing: 0.5,
   },
 });

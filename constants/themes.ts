@@ -8,6 +8,10 @@ export type Theme = {
     text: string;
     accent: string;
   };
+  fonts: {
+    heading: string;
+    body: string;
+  };
 };
 
 export const themes: Theme[] = [
@@ -21,6 +25,10 @@ export const themes: Theme[] = [
       text: '#2C1810',
       accent: '#8B4513',
     },
+    fonts: {
+      heading: 'PlayfairDisplay_700Bold',
+      body: 'Lora_400Regular',
+    },
   },
   {
     name: 'Candlelight',
@@ -31,6 +39,10 @@ export const themes: Theme[] = [
       primary: '#E87C1A',
       text: '#3D2200',
       accent: '#CC5500',
+    },
+    fonts: {
+      heading: 'Cinzel_700Bold',
+      body: 'EBGaramond_400Regular',
     },
   },
   {
@@ -43,6 +55,10 @@ export const themes: Theme[] = [
       text: '#1E3A52',
       accent: '#2E7A9E',
     },
+    fonts: {
+      heading: 'Nunito_700Bold',
+      body: 'Nunito_400Regular',
+    },
   },
   {
     name: 'Midnight Tome',
@@ -53,6 +69,10 @@ export const themes: Theme[] = [
       primary: '#D4A843',
       text: '#E2D9C8',
       accent: '#C09030',
+    },
+    fonts: {
+      heading: 'CinzelDecorative_700Bold',
+      body: 'CrimsonText_400Regular',
     },
   },
   {
@@ -65,6 +85,10 @@ export const themes: Theme[] = [
       text: '#D4C9A8',
       accent: '#4A8C3A',
     },
+    fonts: {
+      heading: 'Oswald_700Bold',
+      body: 'Merriweather_400Regular',
+    },
   },
   {
     name: 'Gothic',
@@ -75,6 +99,10 @@ export const themes: Theme[] = [
       primary: '#9B2335',
       text: '#C9B8D8',
       accent: '#7A1B2A',
+    },
+    fonts: {
+      heading: 'IMFellEnglish_400Regular_Italic',
+      body: 'CrimsonText_400Regular',
     },
   },
 ];

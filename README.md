@@ -1,50 +1,28 @@
-# Welcome to your Expo app 👋
+# Storybook API
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A choose-your-own-adventure React Native app built with Expo. The app connects to a REST API to fetch story scenes, lets the player make choices that branch the narrative, and supports six visually distinct themes.
 
-## Get started
+## Screens
 
-1. Install dependencies
+- **Home** — app title, Begin Adventure button, and a settings gear icon in the top-right corner
+- **Story** — scene text and choice buttons fetched from the API; handles loading (skeleton), error (retry), and ending states
+- **Themes** — preview and switch between all 6 themes; selection persists across restarts
 
-   ```bash
-   npm install
-   ```
+## Themes
 
-2. Start the app
+| Theme | Mode | Heading Font | Body Font |
+|-------|------|-------------|-----------|
+| Parchment | Light | Playfair Display | Lora |
+| Candlelight | Light | Cinzel | EB Garamond |
+| Morning Mist | Light | Nunito | Nunito |
+| Midnight Tome | Dark | Cinzel Decorative | Crimson Text |
+| Forest Shadow | Dark | Oswald | Merriweather |
+| Gothic | Dark | IM Fell English | Crimson Text |
 
-   ```bash
-   npx expo start
-   ```
+## HIG & Material Design
 
-In the output, you'll find options to open the app in a
+- **Color System:** Each theme in `constants/themes.ts` uses five named color roles (`background`, `surface`, `primary`, `text`, `accent`) borrowed from [Material Design 3](https://m3.material.io/styles/color/roles). Nothing in the app has a hardcoded color — every component reads from `useTheme()`, so swapping themes just works everywhere at once.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+- **Safe Areas:** Every screen uses `<SafeAreaView>` from `react-native-safe-area-context` so content doesn't end up under the notch or home indicator. Following [Apple's HIG layout guidelines](https://developer.apple.com/design/human-interface-guidelines/layout#Safe-areas), the story screen covers both top and bottom edges since it hides the navigation header.
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+- **Skeleton Loading:** Instead of a spinner, the app shows a skeleton loader while waiting on the API — a pattern from [Material Design's progress indicators](https://m3.material.io/components/progress-indicators/overview). It pulses and matches each theme's surface color so it feels like part of the UI rather than a generic placeholder.

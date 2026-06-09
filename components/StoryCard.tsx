@@ -1,5 +1,7 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { useTheme } from '@/context/ThemeContext';
+import { ThemedTitle } from '@/components/ThemedTitle';
+import { ThemedText } from '@/components/ThemedText';
 
 type Props = {
   title: string;
@@ -11,15 +13,15 @@ export function StoryCard({ title, text, endingName }: Props) {
   const { theme } = useTheme();
   return (
     <View style={[styles.card, { backgroundColor: theme.colors.surface }]}>
-      <Text style={[styles.title, { color: theme.colors.text }]}>{title}</Text>
+      <ThemedTitle style={styles.title}>{title}</ThemedTitle>
       {endingName && (
         <View style={[styles.endingBadge, { backgroundColor: theme.colors.primary }]}>
-          <Text style={[styles.endingText, { color: theme.colors.background }]}>
+          <ThemedText style={[styles.endingText, { color: theme.colors.background }]}>
             {endingName}
-          </Text>
+          </ThemedText>
         </View>
       )}
-      <Text style={[styles.body, { color: theme.colors.text }]}>{text}</Text>
+      <ThemedText style={styles.body}>{text}</ThemedText>
     </View>
   );
 }
@@ -31,10 +33,9 @@ const styles = StyleSheet.create({
     marginBottom: 24,
   },
   title: {
-    fontSize: 22,
-    fontWeight: '700',
+    fontSize: 26,
     marginBottom: 12,
-    lineHeight: 28,
+    lineHeight: 34,
   },
   endingBadge: {
     alignSelf: 'flex-start',
@@ -44,12 +45,11 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   endingText: {
-    fontSize: 12,
-    fontWeight: '600',
+    fontSize: 14,
     letterSpacing: 0.5,
   },
   body: {
-    fontSize: 16,
-    lineHeight: 26,
+    fontSize: 18,
+    lineHeight: 28,
   },
 });

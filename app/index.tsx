@@ -46,15 +46,15 @@ const styles = StyleSheet.create({
     paddingHorizontal: 32,
   },
   title: {
-    fontSize: 52,
+    fontSize: 56,
     marginBottom: 12,
     textAlign: 'center',
   },
   subtitle: {
-    fontSize: 16,
+    fontSize: 18,
     textAlign: 'center',
     marginBottom: 48,
-    lineHeight: 24,
+    lineHeight: 26,
   },
   startButton: {
     paddingVertical: 16,
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
   },
   startLabel: {
-    fontSize: 18,
+    fontSize: 20,
     letterSpacing: 0.5,
   },
 });

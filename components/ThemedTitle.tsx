@@ -7,7 +7,7 @@ export function ThemedTitle({ style, ...props }: Props) {
   const { theme } = useTheme();
   return (
     <Text
-      style={[{ fontFamily: theme.fonts.heading, color: theme.colors.text, fontSize: 24 }, style]}
+      style={[{ fontFamily: theme.fonts.heading, color: theme.colors.text, fontSize: 28 }, style]}
       {...props}
     />
   );

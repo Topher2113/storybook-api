@@ -151,8 +151,8 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   message: {
-    fontSize: 16,
-    lineHeight: 24,
+    fontSize: 18,
+    lineHeight: 26,
     marginBottom: 24,
     textAlign: 'center',
   },
@@ -163,6 +163,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   actionLabel: {
-    fontSize: 17,
+    fontSize: 19,
   },
 });

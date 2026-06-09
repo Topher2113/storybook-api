@@ -7,7 +7,7 @@ export function ThemedText({ style, ...props }: Props) {
   const { theme } = useTheme();
   return (
     <Text
-      style={[{ fontFamily: theme.fonts.body, color: theme.colors.text }, style]}
+      style={[{ fontFamily: theme.fonts.body, color: theme.colors.text, fontSize: 17 }, style]}
       {...props}
     />
   );

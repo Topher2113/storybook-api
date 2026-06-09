@@ -33,9 +33,9 @@ const styles = StyleSheet.create({
     marginBottom: 24,
   },
   title: {
-    fontSize: 22,
+    fontSize: 26,
     marginBottom: 12,
-    lineHeight: 30,
+    lineHeight: 34,
   },
   endingBadge: {
     alignSelf: 'flex-start',
@@ -45,11 +45,11 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   endingText: {
-    fontSize: 12,
+    fontSize: 14,
     letterSpacing: 0.5,
   },
   body: {
-    fontSize: 16,
-    lineHeight: 26,
+    fontSize: 18,
+    lineHeight: 28,
   },
 });

@@ -64,9 +64,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   name: {
-    fontSize: 16,
+    fontSize: 18,
   },
   mode: {
-    fontSize: 13,
+    fontSize: 15,
   },
 });

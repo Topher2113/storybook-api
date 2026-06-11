@@ -9,11 +9,16 @@ import { StoryCard } from '@/components/StoryCard';
 import { ChoiceButton } from '@/components/ChoiceButton';
 import { ActionButton } from '@/components/ActionButton';
 import { ThemedText } from '@/components/ThemedText';
+import { NpcButton } from '@/components/NpcButton';
+import { NpcDialogModal } from '@/components/NpcDialogModal';
 
 export default function StoryScreen() {
   const { theme } = useTheme();
   const router = useRouter();
-  const { scene, gameStatus, loading, error, startGame, choose, retry } = useStorySession();
+  const {
+    scene, gameStatus, loading, error, startGame, choose, retry,
+    npcDialog, npcError, talkToNpc, closeNpcDialog,
+  } = useStorySession();
 
   useEffect(() => {
     startGame();
@@ -44,6 +49,13 @@ export default function StoryScreen() {
             endingName={isEnding ? scene.ending_name : undefined}
           />
         )}
+        {!loading && !error && scene && scene.npcsPresent && scene.npcsPresent.length > 0 && (
+          <View style={styles.npcSection}>
+            {scene.npcsPresent.map((npc) => (
+              <NpcButton key={npc.id} name={npc.name} onPress={() => talkToNpc(npc.id)} />
+            ))}
+          </View>
+        )}
         {!loading && !error && scene && !hasChoices && !isEnding && (
           <ThemedText style={[styles.message, { color: theme.colors.accent }]}>
             No paths forward were found.
@@ -65,6 +77,8 @@ export default function StoryScreen() {
           />
         ))}
       </View>
+
+      <NpcDialogModal dialog={npcDialog} error={npcError} onClose={closeNpcDialog} />
     </SafeAreaView>
   );
 }
@@ -84,6 +98,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingBottom: 16,
     gap: 10,
+  },
+  npcSection: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+    marginBottom: 16,
   },
   message: {
     fontSize: 18,

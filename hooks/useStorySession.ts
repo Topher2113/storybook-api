@@ -40,60 +40,47 @@ export function useStorySession(): StorySession {
     return 'in_progress';
   }, [scene]);
 
-  const startGame = useCallback(async () => {
+  async function withLoading(action: () => Promise<void>, errorMsg: string) {
     setLoading(true);
     setError(null);
+    try {
+      await action();
+    } catch {
+      setError(errorMsg);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  const startGame = useCallback(() => withLoading(async () => {
     setScene(null);
     setCurrentSceneId(null);
-    try {
-      const listRes = await fetch(`${BASE}/api/scenes`);
-      if (!listRes.ok) throw new Error(`Server error: ${listRes.status}`);
-      const { startNode } = await listRes.json() as { startNode: string };
-      const sceneRes = await fetch(`${BASE}/api/scenes/${startNode}`);
-      if (!sceneRes.ok) throw new Error(`Server error: ${sceneRes.status}`);
-      const data = await sceneRes.json() as Scene;
-      setCurrentSceneId(startNode);
-      setScene(data);
-    } catch {
-      setError('Could not start the adventure. Check your connection and try again.');
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+    const listRes = await fetch(`${BASE}/api/scenes`);
+    if (!listRes.ok) throw new Error(`Server error: ${listRes.status}`);
+    const { startNode } = await listRes.json() as { startNode: string };
+    const sceneRes = await fetch(`${BASE}/api/scenes/${startNode}`);
+    if (!sceneRes.ok) throw new Error(`Server error: ${sceneRes.status}`);
+    const data = await sceneRes.json() as Scene;
+    setCurrentSceneId(startNode);
+    setScene(data);
+  }, 'Could not start the adventure. Check your connection and try again.'), []);
 
-  const choose = useCallback(async (target: string) => {
-    setLoading(true);
-    setError(null);
-    try {
-      const res = await fetch(`${BASE}/api/scenes/${target}`);
-      if (!res.ok) throw new Error(`Server error: ${res.status}`);
-      const data = await res.json() as Scene;
-      setCurrentSceneId(target);
-      setScene(data);
-    } catch {
-      setError('Could not load the next scene. Please try again.');
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+  const choose = useCallback((target: string) => withLoading(async () => {
+    const res = await fetch(`${BASE}/api/scenes/${target}`);
+    if (!res.ok) throw new Error(`Server error: ${res.status}`);
+    const data = await res.json() as Scene;
+    setCurrentSceneId(target);
+    setScene(data);
+  }, 'Could not load the next scene. Please try again.'), []);
 
-  const retry = useCallback(async () => {
-    if (!currentSceneId) {
-      await startGame();
-      return;
-    }
-    setLoading(true);
-    setError(null);
-    try {
+  const retry = useCallback(() => {
+    if (!currentSceneId) return startGame();
+    return withLoading(async () => {
       const res = await fetch(`${BASE}/api/scenes/${currentSceneId}`);
       if (!res.ok) throw new Error(`Server error: ${res.status}`);
       const data = await res.json() as Scene;
       setScene(data);
-    } catch {
-      setError('Could not reload the scene. Please try again.');
-    } finally {
-      setLoading(false);
-    }
+    }, 'Could not reload the scene. Please try again.');
   }, [currentSceneId, startGame]);
 
   return { scene, gameStatus, loading, error, startGame, choose, retry };

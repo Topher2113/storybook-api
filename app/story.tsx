@@ -1,12 +1,13 @@
 import { useEffect } from 'react';
-import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Stack, useRouter } from 'expo-router';
+import { useRouter } from 'expo-router';
 import { useTheme } from '@/context/ThemeContext';
 import { useStorySession } from '@/hooks/useStorySession';
-import { SkeletonLoader } from '@/components/SkeletonLoader';
+import { SkeletonCard, SkeletonChoices } from '@/components/SkeletonLoader';
 import { StoryCard } from '@/components/StoryCard';
 import { ChoiceButton } from '@/components/ChoiceButton';
+import { ActionButton } from '@/components/ActionButton';
 import { ThemedText } from '@/components/ThemedText';
 
 export default function StoryScreen() {
@@ -18,119 +19,53 @@ export default function StoryScreen() {
     startGame();
   }, [startGame]);
 
-  function renderStory() {
-    if (loading) {
-      return <SkeletonLoader />;
-    }
+  const isEnding = gameStatus === 'completed' || scene?.type === 'ending';
+  const hasChoices = (scene?.choices?.length ?? 0) > 0;
 
-    if (error) {
-      return (
-        <ThemedText style={styles.message}>{error}</ThemedText>
-      );
-    }
-
-    if (!scene) {
-      return (
-        <ThemedText style={styles.message}>
-          No story found. The adventure may be unavailable right now.
-        </ThemedText>
-      );
-    }
-
-    const isEnding = gameStatus === 'completed' || scene.type === 'ending';
-    const hasChoices = scene.choices && scene.choices.length > 0;
-
-    if (!hasChoices && !isEnding) {
-      return (
-        <>
-          <StoryCard title={scene.title} text={scene.text} />
+  return (
+    <SafeAreaView
+      edges={['bottom']}
+      style={[styles.container, { backgroundColor: theme.colors.background }]}
+    >
+      <ScrollView style={styles.storyScroll} contentContainerStyle={styles.storyContent}>
+        {loading && <SkeletonCard />}
+        {error && (
+          <ThemedText style={styles.message}>{error}</ThemedText>
+        )}
+        {!loading && !error && !scene && (
+          <ThemedText style={styles.message}>
+            No story found. The adventure may be unavailable right now.
+          </ThemedText>
+        )}
+        {!loading && !error && scene && (
+          <StoryCard
+            title={scene.title}
+            text={scene.text}
+            endingName={isEnding ? scene.ending_name : undefined}
+          />
+        )}
+        {!loading && !error && scene && !hasChoices && !isEnding && (
           <ThemedText style={[styles.message, { color: theme.colors.accent }]}>
             No paths forward were found.
           </ThemedText>
-        </>
-      );
-    }
+        )}
+      </ScrollView>
 
-    return (
-      <StoryCard
-        title={scene.title}
-        text={scene.text}
-        endingName={isEnding ? scene.ending_name : undefined}
-      />
-    );
-  }
-
-  function renderChoices() {
-    if (loading || error || !scene) {
-      if (error) {
-        return (
-          <Pressable
-            style={({ pressed }) => [
-              styles.actionButton,
-              { backgroundColor: theme.colors.primary, opacity: pressed ? 0.7 : 1 },
-            ]}
-            onPress={retry}
-          >
-            <ThemedText style={[styles.actionLabel, { color: theme.colors.background }]}>
-              Try Again
-            </ThemedText>
-          </Pressable>
-        );
-      }
-      return null;
-    }
-
-    const isEnding = gameStatus === 'completed' || scene.type === 'ending';
-    const hasChoices = scene.choices && scene.choices.length > 0;
-
-    if (isEnding || !hasChoices) {
-      return (
-        <Pressable
-          style={({ pressed }) => [
-            styles.actionButton,
-            { backgroundColor: theme.colors.primary, opacity: pressed ? 0.7 : 1 },
-          ]}
-          onPress={() => router.replace('/')}
-        >
-          <ThemedText style={[styles.actionLabel, { color: theme.colors.background }]}>
-            Play Again
-          </ThemedText>
-        </Pressable>
-      );
-    }
-
-    return (
-      <>
-        {scene.choices!.map((choice) => (
+      <View style={styles.choicesPanel}>
+        {loading && <SkeletonChoices />}
+        {error && <ActionButton text="Try Again" onPress={retry} />}
+        {!loading && !error && scene && (isEnding || !hasChoices) && (
+          <ActionButton text="Play Again" onPress={() => router.replace('/')} />
+        )}
+        {!loading && !error && scene && !isEnding && hasChoices && scene.choices!.map((choice) => (
           <ChoiceButton
             key={choice.target}
             text={choice.text}
             onPress={() => choose(choice.target)}
           />
         ))}
-      </>
-    );
-  }
-
-  return (
-    <>
-      <Stack.Screen
-        options={{
-          headerShown: false,
-        }}
-      />
-      <SafeAreaView
-        edges={['top', 'bottom']}
-        style={[styles.container, { backgroundColor: theme.colors.background }]}
-      >
-        <ScrollView style={styles.storyScroll} contentContainerStyle={styles.storyContent}>
-          {renderStory()}
-        </ScrollView>
-        <View style={styles.choicesPanel}>
-          {renderChoices()}
-        </View>
-      </SafeAreaView>
-    </>
+      </View>
+    </SafeAreaView>
   );
 }
 
@@ -143,7 +78,7 @@ const styles = StyleSheet.create({
   },
   storyContent: {
     padding: 20,
-    paddingTop: 40,
+    paddingTop: 24,
   },
   choicesPanel: {
     paddingHorizontal: 20,
@@ -155,14 +90,5 @@ const styles = StyleSheet.create({
     lineHeight: 26,
     marginBottom: 24,
     textAlign: 'center',
-  },
-  actionButton: {
-    borderRadius: 12,
-    paddingVertical: 16,
-    paddingHorizontal: 32,
-    alignItems: 'center',
-  },
-  actionLabel: {
-    fontSize: 19,
   },
 });

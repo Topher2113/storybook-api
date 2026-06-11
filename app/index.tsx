@@ -1,9 +1,10 @@
-import { Pressable, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { useTheme } from '@/context/ThemeContext';
 import { ThemedTitle } from '@/components/ThemedTitle';
 import { ThemedText } from '@/components/ThemedText';
+import { ActionButton } from '@/components/ActionButton';
 
 export default function HomeScreen() {
   const { theme } = useTheme();
@@ -16,20 +17,10 @@ export default function HomeScreen() {
     >
       <View style={styles.content}>
         <ThemedTitle style={styles.title}>Storybook</ThemedTitle>
-        <ThemedText style={[styles.subtitle, { color: theme.colors.accent }]}>
+        <ThemedText style={styles.subtitle}>
           Every choice writes the next chapter
         </ThemedText>
-        <Pressable
-          style={({ pressed }) => [
-            styles.startButton,
-            { backgroundColor: theme.colors.primary, opacity: pressed ? 0.7 : 1 },
-          ]}
-          onPress={() => router.push('/story')}
-        >
-          <ThemedText style={[styles.startLabel, { color: theme.colors.background }]}>
-            Begin Adventure
-          </ThemedText>
-        </Pressable>
+        <ActionButton text="Begin Adventure" onPress={() => router.push('/story')} />
       </View>
     </SafeAreaView>
   );
@@ -55,14 +46,5 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 48,
     lineHeight: 26,
-  },
-  startButton: {
-    paddingVertical: 16,
-    paddingHorizontal: 40,
-    borderRadius: 12,
-  },
-  startLabel: {
-    fontSize: 20,
-    letterSpacing: 0.5,
   },
 });

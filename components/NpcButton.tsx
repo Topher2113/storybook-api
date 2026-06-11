@@ -3,34 +3,34 @@ import { useTheme } from '@/context/ThemeContext';
 import { ThemedText } from '@/components/ThemedText';
 
 type Props = {
-  text: string;
+  name: string;
   onPress: () => void;
 };
 
-export function ChoiceButton({ text, onPress }: Props) {
+export function NpcButton({ name, onPress }: Props) {
   const { theme } = useTheme();
   return (
     <Pressable
       style={({ pressed }) => [
         styles.button,
-        { backgroundColor: theme.colors.primary, opacity: pressed ? 0.7 : 1 },
+        { borderColor: theme.colors.accent, opacity: pressed ? 0.6 : 1 },
       ]}
       onPress={onPress}
     >
-      <ThemedText style={[styles.label, { color: theme.colors.buttonText }]}>{text}</ThemedText>
+      <ThemedText style={[styles.label, { color: theme.colors.accent }]}>Talk to {name}</ThemedText>
     </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
   button: {
-    borderRadius: 10,
-    paddingVertical: 14,
-    paddingHorizontal: 20,
-    marginBottom: 12,
+    borderWidth: 2,
+    borderRadius: 20,
+    paddingVertical: 8,
+    paddingHorizontal: 14,
+    alignItems: 'center',
   },
   label: {
-    fontSize: 17,
-    lineHeight: 22,
+    fontSize: 14,
   },
 });

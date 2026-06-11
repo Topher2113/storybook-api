@@ -16,7 +16,7 @@ export function StoryCard({ title, text, endingName }: Props) {
       <ThemedTitle style={styles.title}>{title}</ThemedTitle>
       {endingName && (
         <View style={[styles.endingBadge, { backgroundColor: theme.colors.primary }]}>
-          <ThemedText style={[styles.endingText, { color: theme.colors.background }]}>
+          <ThemedText style={[styles.endingText, { color: theme.colors.buttonText }]}>
             {endingName}
           </ThemedText>
         </View>

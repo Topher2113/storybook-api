@@ -1,6 +1,7 @@
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme } from '@/context/ThemeContext';
+import { ThemedText } from '@/components/ThemedText';
 import { ThemePreviewCard } from '@/components/ThemePreviewCard';
 import { themes } from '@/constants/themes';
 
@@ -15,9 +16,9 @@ export default function SettingsScreen() {
       style={[styles.container, { backgroundColor: theme.colors.background }]}
     >
       <View style={[styles.subheader, { backgroundColor: theme.colors.background }]}>
-        <Text style={[styles.count, { color: theme.colors.accent, fontFamily: theme.fonts.body }]}>
+        <ThemedText style={[styles.count, { color: theme.colors.accent }]}>
           {lightCount} light · {darkCount} dark
-        </Text>
+        </ThemedText>
       </View>
       <ScrollView contentContainerStyle={styles.list}>
         {themes.map((t) => (

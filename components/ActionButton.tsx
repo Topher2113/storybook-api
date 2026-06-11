@@ -7,7 +7,7 @@ type Props = {
   onPress: () => void;
 };
 
-export function ChoiceButton({ text, onPress }: Props) {
+export function ActionButton({ text, onPress }: Props) {
   const { theme } = useTheme();
   return (
     <Pressable
@@ -24,13 +24,12 @@ export function ChoiceButton({ text, onPress }: Props) {
 
 const styles = StyleSheet.create({
   button: {
-    borderRadius: 10,
-    paddingVertical: 14,
-    paddingHorizontal: 20,
-    marginBottom: 12,
+    borderRadius: 12,
+    paddingVertical: 16,
+    paddingHorizontal: 32,
+    alignItems: 'center',
   },
   label: {
-    fontSize: 17,
-    lineHeight: 22,
+    fontSize: 19,
   },
 });

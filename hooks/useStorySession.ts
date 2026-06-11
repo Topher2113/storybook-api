@@ -31,7 +31,7 @@ type StorySession = {
 export function useStorySession(): StorySession {
   const [currentSceneId, setCurrentSceneId] = useState<string | null>(null);
   const [scene, setScene] = useState<Scene | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   const gameStatus = useMemo<GameStatus>(() => {

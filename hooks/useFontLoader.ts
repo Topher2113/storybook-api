@@ -1,6 +1,4 @@
-import { useEffect } from 'react';
 import { useFonts } from 'expo-font';
-import * as SplashScreen from 'expo-splash-screen';
 import { PlayfairDisplay_700Bold } from '@expo-google-fonts/playfair-display';
 import { Lora_400Regular } from '@expo-google-fonts/lora';
 import { Cinzel_700Bold } from '@expo-google-fonts/cinzel';
@@ -26,12 +24,6 @@ export function useFontLoader() {
     Merriweather_400Regular,
     IMFellEnglish_400Regular_Italic,
   });
-
-  useEffect(() => {
-    if (fontsLoaded || fontError) {
-      SplashScreen.hideAsync();
-    }
-  }, [fontsLoaded, fontError]);
 
   return { ready: fontsLoaded || !!fontError };
 }

@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import * as SplashScreen from 'expo-splash-screen';
@@ -8,7 +9,15 @@ import { useFontLoader } from '@/hooks/useFontLoader';
 SplashScreen.preventAutoHideAsync();
 
 function RootStack() {
-  const { theme } = useTheme();
+  const { theme, isLoading: themeLoading } = useTheme();
+  const { ready: fontsReady } = useFontLoader();
+  const ready = fontsReady && !themeLoading;
+
+  useEffect(() => {
+    if (ready) SplashScreen.hideAsync();
+  }, [ready]);
+
+  if (!ready) return null;
 
   return (
     <>
@@ -43,10 +52,6 @@ function RootStack() {
 }
 
 export default function RootLayout() {
-  const { ready } = useFontLoader();
-
-  if (!ready) return null;
-
   return (
     <ThemeProvider>
       <RootStack />

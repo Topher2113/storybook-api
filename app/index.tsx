@@ -17,7 +17,7 @@ export default function HomeScreen() {
     >
       <View style={styles.content}>
         <ThemedTitle style={styles.title}>Storybook</ThemedTitle>
-        <ThemedText style={[styles.subtitle, { color: theme.colors.text }]}>
+        <ThemedText style={styles.subtitle}>
           Every choice writes the next chapter
         </ThemedText>
         <ActionButton text="Begin Adventure" onPress={() => router.push('/story')} />

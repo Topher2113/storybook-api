@@ -1,4 +1,4 @@
-import { Pressable } from 'react-native';
+import { HeaderButton } from '@react-navigation/elements';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '@/context/ThemeContext';
@@ -7,11 +7,11 @@ export function GearButton() {
   const { theme } = useTheme();
   const router = useRouter();
   return (
-    <Pressable
-      style={({ pressed }) => ({ opacity: pressed ? 0.6 : 1, padding: 8, alignItems: 'center', justifyContent: 'center' })}
+    <HeaderButton
       onPress={() => router.push('/settings')}
+      accessibilityLabel="Settings"
     >
-      <Ionicons name="settings-outline" size={24} color={theme.colors.text} />
-    </Pressable>
+      <Ionicons name="settings-outline" size={28} color={theme.colors.text} />
+    </HeaderButton>
   );
 }

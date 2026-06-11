@@ -86,7 +86,7 @@ export const themes: Theme[] = [
     colors: {
       background: '#0C1A0E',
       surface: '#152417',
-      primary: '#6FAE5A',
+      primary: '#3E7A2C',
       text: '#D4C9A8',
       accent: '#4A8C3A',
       buttonText: '#E8F4E8',
@@ -102,7 +102,7 @@ export const themes: Theme[] = [
     colors: {
       background: '#120816',
       surface: '#1E0F27',
-      primary: '#9B2335',
+      primary: '#6B1220',
       text: '#C9B8D8',
       accent: '#7A1B2A',
       buttonText: '#F0E8F0',

@@ -23,7 +23,7 @@ export function NpcDialogModal({ dialog, error, onClose }: Props) {
           {dialog ? (
             <>
               <ThemedTitle style={styles.title}>{dialog.npc.name}</ThemedTitle>
-              <ThemedText style={[styles.description, { color: theme.colors.accent }]}>
+              <ThemedText style={styles.description}>
                 {dialog.npc.description}
               </ThemedText>
               <ThemedText style={styles.body}>{dialog.dialog}</ThemedText>

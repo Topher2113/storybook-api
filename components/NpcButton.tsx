@@ -13,11 +13,11 @@ export function NpcButton({ name, onPress }: Props) {
     <Pressable
       style={({ pressed }) => [
         styles.button,
-        { borderColor: theme.colors.accent, opacity: pressed ? 0.6 : 1 },
+        { borderColor: theme.colors.text, opacity: pressed ? 0.6 : 1 },
       ]}
       onPress={onPress}
     >
-      <ThemedText style={[styles.label, { color: theme.colors.accent }]}>Talk to {name}</ThemedText>
+      <ThemedText style={[styles.label, { color: theme.colors.text }]}>Talk to {name}</ThemedText>
     </Pressable>
   );
 }
